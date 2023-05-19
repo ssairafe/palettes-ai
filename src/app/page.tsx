@@ -1,95 +1,63 @@
-import Image from 'next/image'
+"use client";
 import styles from './page.module.css'
+import { useState } from 'react'
+import {Button, Box, TextField} from '@mui/material';
 
-export default function Home() {
+ function Home() {
+ const [term, setTerm] = useState('');
+   const [paletteData, setpaletteData] = useState<JSX.Element[]>([]);
+
+  const askForPalettes = (input: string): Promise<void> =>
+  fetch('http://localhost:5001/data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ input })
+  })
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.palettes);
+      const tempPalettes = Object.entries(res.palettes as Record<string, string[]>).map((pal: [string, string[]]) => {
+        let paletteTitle = pal[0];
+        let paletteColors = pal[1].map((hex: string) => {
+          return <Box sx={{backgroundColor: hex, width: '2rem', height: '4rem'}}></Box>
+        })
+        return (
+        <Box>
+          <h3>{paletteTitle}</h3>
+          <Box sx={{display: 'flex'}}>{paletteColors}</Box>
+        </Box>
+        )
+      });
+      setpaletteData(tempPalettes);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
   return (
     <main className={styles.main}>
+      <div className={styles.center}>
+        <h1>Palettes AI</h1>
+      </div>
       <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
+        <TextField sx={{ width: '100%' }} id="outlined-basic" label="Enter your word to find color palettes that match" variant="outlined" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setTerm(event.target.value);
+        }} />
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+          <Button variant="contained"
+            onClick={() => {
+              askForPalettes(term);
+            }}
+          >GENERATE</Button>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
       <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+            {paletteData}
       </div>
     </main>
   )
 }
+
+export default Home;
