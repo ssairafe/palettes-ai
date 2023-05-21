@@ -20,9 +20,7 @@ async function runCompletion(term) {
 }
 
 router.post('/', (req, res) => {
-  console.log(req.body)
   runCompletion(req.body.input).then(reply => {
-    console.log(JSON.parse(reply[0].message.content))
     res.json({ palettes: JSON.parse(reply[0].message.content) });
   })
 });

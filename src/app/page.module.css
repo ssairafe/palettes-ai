@@ -17,6 +17,23 @@
   font-family: var(--font-mono);
 }
 
+.homeButtonContainer {
+  max-width: var(--max-width);
+  width: 100%;
+}
+.recipe {
+  display: inherit;
+  justify-content: center;
+  align-items: inherit;
+  font-size: 1.25rem;
+  max-width: var(--max-width);
+  width: 100%;
+  z-index: 2;
+  font-family: var(--font-mono);
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
