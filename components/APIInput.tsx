@@ -1,13 +1,7 @@
-import React, { FormEventHandler } from 'react';
-import { useState } from 'react'
+import React, { useState } from 'react';
 import { Button, Box, TextField } from '@mui/material';
-import styles from '../page.module.css'
-
-interface RecipeInput {
-  country: string | null;
-  dish: string | null;
-  foodRestrictions: string | null;
-}
+import styles from '../styles/page.module.css'
+import RecipeInput from '../interfaces/RecipeInput';
 
 interface MyComponentProps {
   formSubmitHandler: (input: RecipeInput) => Promise<void>;
@@ -33,7 +27,7 @@ const APIInput: React.FC<MyComponentProps> = ({ formSubmitHandler, submitHandler
   };
 
   const colorsInputElement = (
-    <Box className={styles.description}>
+    <Box className={styles.input}>
       <Box sx={{ width: '100%' }}>
         <TextField
           sx={{ width: '100%' }}
@@ -42,10 +36,11 @@ const APIInput: React.FC<MyComponentProps> = ({ formSubmitHandler, submitHandler
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTerm(event.target.value); }}
         />
       </Box>
-      <Box>
+      <Box sx={{ padding: '0 0.5rem'}}>
         <Button
           variant="contained"
-          onClick={(e) => {
+          sx={{ fontFamily: 'Poppins' }}
+          onClick={(e: { preventDefault: () => void; }) => {
             e.preventDefault();
             submitHandler(term);
           }}
@@ -80,7 +75,8 @@ const APIInput: React.FC<MyComponentProps> = ({ formSubmitHandler, submitHandler
         fullWidth
       />
       <Button
-        onClick={(e) => {
+        sx={{ fontFamily: 'Poppins' }}
+        onClick={(e: { preventDefault: () => void; }) => {
           e.preventDefault();
           formSubmitHandler(recipeRequest);
         }}
@@ -92,7 +88,7 @@ const APIInput: React.FC<MyComponentProps> = ({ formSubmitHandler, submitHandler
     </Box>
   );
 
-  let content: React.JSX.Element | undefined = undefined;
+  let content: React.ReactNode | undefined = undefined;
 
   switch (view) {
     case 'colors':

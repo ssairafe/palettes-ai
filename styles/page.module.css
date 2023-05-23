@@ -1,13 +1,12 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   min-height: 100vh;
 }
 
-.description {
-  display: inherit;
+.input {
+  display: flex;
   justify-content: center;
   align-items: inherit;
   font-size: 0.85rem;
@@ -20,6 +19,7 @@
 .homeButtonContainer {
   max-width: var(--max-width);
   width: 100%;
+  padding: 0.5rem 0
 }
 .recipe {
   display: inherit;
@@ -41,9 +41,10 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  grid-template-columns: repeat(3, minmax(33.33%, auto));
   width: var(--max-width);
   max-width: 100%;
+  margin-bottom: 3rem;
 }
 
 .card {
@@ -100,7 +101,7 @@
   content: '';
   left: 50%;
   position: absolute;
-  filter: blur(45px);
+  filter: blur(100px);
   transform: translateZ(0);
 }
 
@@ -138,6 +139,18 @@
     text-align: center;
   }
 
+  .homeButtonContainer {
+    padding: 0.5rem;
+  }
+
+  .input {
+    flex-direction: column;
+  }
+
+  .input button {
+    margin-top: 0.5rem;
+  }
+
   .card {
     padding: 1rem 2.5rem;
   }
@@ -147,7 +160,7 @@
   }
 
   .center {
-    padding: 8rem 0 6rem;
+    padding: 8rem 1rem 6rem;
   }
 
   .center::before {
