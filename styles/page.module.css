@@ -16,6 +16,11 @@
   font-family: var(--font-mono);
 }
 
+.form {
+  max-width: var(--max-width);
+  width: 100%;
+}
+
 .homeButtonContainer {
   max-width: var(--max-width);
   width: 100%;
@@ -145,6 +150,10 @@
 
   .input {
     flex-direction: column;
+  }
+
+  .input, .form {
+    padding: 0 0.5rem;
   }
 
   .input button {

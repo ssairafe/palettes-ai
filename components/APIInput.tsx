@@ -52,7 +52,7 @@ const APIInput: React.FC<MyComponentProps> = ({ formSubmitHandler, submitHandler
   );
 
   const recipeFormElement = (
-    <Box>
+    <Box className={styles.form}>
       <TextField
         label="Dish name"
         name="dish"
